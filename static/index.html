@@ -269,6 +269,7 @@ function update() {
     //XXX: TODO Get the world from the webservice using a XMLHTTPRequest
     sendJSONXMLHTTPRequest("/world", "GET", null, function(resp) {
         world=resp;
+        drawNextFrame();
     });
     drawFrame();
 }
