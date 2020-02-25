@@ -251,8 +251,24 @@ mouse = (function() {
 
 // Add the application specific mouse listeners!
 //XXX: TODO Make these prettier!
+
+// FROM: https://stackoverflow.com/questions/17242144/javascript-convert-hsb-hsv-color-to-rgb-accurately
+// AUTHOR: Kamil Kiełczewski
+// input: h in [0,360] and s,v in [0,1] - output: r,g,b in [0,1]
+function hsv2rgb(h,s,v) {
+  let f= (n,k=(n+h/60)%6) => v - v*s*Math.max( Math.min(k,4-k,1), 0);
+  return [f(5),f(3),f(1)];
+}
+
+function arr2color(a) {
+    return 'rgb(' + Math.round(a[0]*255) + ','
+        + Math.round(a[1]*255) + ','
+        + Math.round(a[2]*255) + ')';
+}
+
+let color = arr2color(hsv2rgb(Math.round(Math.random()*360), 1, 1));
 mouse.mousedowners.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'blue'});
+    addEntityWithoutName({'x':x,'y':y,'colour': 'blue'});
 });
 
 mouse.mouseuppers.push(function(x,y,clicked,e) {
@@ -260,7 +276,7 @@ mouse.mouseuppers.push(function(x,y,clicked,e) {
 });
 
 mouse.mousedraggers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'green',
+    addEntityWithoutName({'x':x,'y':y,'colour':color,
                           'radius':10});
 });
 
